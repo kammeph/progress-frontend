@@ -11,8 +11,8 @@ export class AppEffects {
         ofType(AppActions.tryLogIn),
         switchMap(({ username, password }) => this.authService.authenticate(username, password).pipe(
             map(token => {
-              localStorage.setItem('token', token.access_token)
-              return AppActions.logInSuccess({accessToken: token.access_token})
+              localStorage.setItem('token', token.accessToken)
+              return AppActions.logInSuccess({accessToken: token.accessToken})
             }),
             catchError(() => EMPTY)
         )

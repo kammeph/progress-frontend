@@ -22,6 +22,7 @@ import { PasswordInputComponent } from './presenters/password-input/password-inp
 import { TextInputComponent } from './presenters/text-input/text-input.component';
 import { AuthInterceptor } from './lib/interceptors/auth.interceptor/auth.interceptor';
 import { ErrorInterceptor } from './lib/interceptors/error.interceptor/error.interceptor';
+import { FormatInterceptor } from './lib/interceptors/format.interceptor/format.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,11 @@ import { ErrorInterceptor } from './lib/interceptors/error.interceptor/error.int
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FormatInterceptor,
       multi: true
     }
   ],
