@@ -1,6 +1,6 @@
 # PROGRESS - A Strength Training Planning and Tracking Application 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
+This is the PROGRESS frontend application. PROGRESS is a strength training planning and tracking tool.
 
 ## Development server
 

@@ -1,0 +1,10 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{ labelText }}</mat-label>
+    <input matInput type="text" [formControl]="control">
+    <button type="button" *ngIf="control?.value" matSuffix mat-icon-button (click)="control.setValue('')">
+        <mat-icon>close</mat-icon>
+    </button>
+    <mat-error *ngIf="control && control.invalid && control.touched">
+        {{ errorText }}
+    </mat-error>
+</mat-form-field>

@@ -1,6 +1,6 @@
 {
   "name": "Progress",
-  "short_name": "progress-frontend",
+  "short_name": "progress",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

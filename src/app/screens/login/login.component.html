@@ -1,0 +1,13 @@
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <progress-text-input 
+        [control]="username" 
+        [labelText]="'Benutzername'"
+        [errorText]="'Benutzernamen eingeben'">
+    </progress-text-input>
+    <progress-password-input
+        [control]="password"
+        [labelText]="'Passwort'"
+        [errorText]="'Passwort eingeben'">
+    </progress-password-input>
+    <button mat-button type="submit" [disabled]="loginForm.invalid">LogIn</button>
+</form>
