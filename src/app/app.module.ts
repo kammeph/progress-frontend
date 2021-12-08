@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,6 +39,7 @@ import { FormatInterceptor } from './lib/interceptors/format.interceptor/format.
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatSnackBarModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
