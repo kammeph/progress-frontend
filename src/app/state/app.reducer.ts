@@ -1,22 +1,36 @@
-import { createReducer, on, props } from "@ngrx/store";
+import { state } from "@angular/animations";
+import { createReducer, on } from "@ngrx/store";
 import * as AppActions from "./app.action";
 
 export interface AppState {
     isLoggedIn: boolean;
     isOnline: boolean;
-    accessToken: string,
-    tryLogIn: boolean;
+    username: string,
+    roles: string[],
 }
 
 const initialState: AppState = {
     isLoggedIn: false,
     isOnline: false,
-    accessToken: '',
-    tryLogIn: false
+    username: '',
+    roles: [],
 }
 
 export const appReducer = createReducer(
     initialState,
-    on(AppActions.tryLogIn, state => ({...state, tryLogIn: true })),
-    on(AppActions.logInSuccess, (state, { accessToken }) => ({ ...state, accessToken: accessToken, tryLogIn: false}))
-)
+    on(AppActions.getAuthenticatedUser, state => ({
+        ...state
+    })),
+    on(AppActions.getAuthenticatedUserSuccess, (state, { username, roles }) => ({
+        ...state,
+        isLoggedIn: true,
+        username: username,
+        roles: roles
+    })),
+    on(AppActions.getAuthenticatedUserFailed, state => ({
+        ...state,
+        isLoggedIn: false,
+        username: '',
+        roles: []
+    }))
+);

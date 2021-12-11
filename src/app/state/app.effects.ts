@@ -1,26 +1,32 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, EMPTY, map, mergeMap, switchMap } from "rxjs";
-import { AuthService } from "../lib/services/auth.service/auth.service";
+import { catchError, map, of, switchMap } from "rxjs";
+import { UserService } from "../lib/services/user.service/user.service";
+import { logInSuccess } from "../screens/login/state/login.actions";
 import * as AppActions from "./app.action";
+
 
 @Injectable()
 export class AppEffects {
     tryLogIn$ = createEffect(() =>
       this.actions$.pipe(
-        ofType(AppActions.tryLogIn),
-        switchMap(({ username, password }) => this.authService.authenticate(username, password).pipe(
-            map(token => {
-              localStorage.setItem('token', token.accessToken)
-              return AppActions.logInSuccess({accessToken: token.accessToken})
-            }),
-            catchError(() => EMPTY)
-        )
-      ))
+        ofType(logInSuccess),
+        map(() => AppActions.getAuthenticatedUser())
+      )
     );
+
+    getAuthenticatedUser$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(AppActions.getAuthenticatedUser),
+        switchMap(() => this.userService.getMe().pipe(
+          map(user => AppActions.getAuthenticatedUserSuccess(user)),
+          catchError(err => of(AppActions.getAuthenticatedUserFailed()))
+        ))
+      )
+    )
 
     constructor(
         private actions$: Actions,
-        private authService: AuthService
+        private userService: UserService,
     ) {}
 }

@@ -3,12 +3,22 @@ import { AppState } from "./app.reducer";
 
 export const getAppState = createFeatureSelector<AppState>('app');
 
-export const getTryLogIn = createSelector(
+export const selectIsLoggedIn = createSelector(
     getAppState,
-    state => state.tryLogIn
+    state => state.isLoggedIn
 );
 
-export const getAccessToken = createSelector(
+export const selectIsOnline = createSelector(
     getAppState,
-    state => state.accessToken
-)
+    state => state.isOnline
+);
+
+export const selectUsername = createSelector(
+    getAppState,
+    state => state.username
+);
+
+export const selectRoles = createSelector(
+    getAppState,
+    state => state.roles
+);

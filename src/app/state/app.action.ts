@@ -1,12 +1,14 @@
 import { createAction, props } from "@ngrx/store";
-import { User } from "../app.models";
 
-export const tryLogIn = createAction(
-    '[App] Try Log In',
-    props<{ username: string, password: string }>()
-)
+export const getAuthenticatedUser = createAction(
+    '[App] Get Authenticated User'
+);
 
-export const logInSuccess = createAction(
-    '[App] Log In Success',
-    props<{ accessToken: string }>()
-)
+export const getAuthenticatedUserSuccess = createAction(
+    '[App] Get Authenticated User Success',
+    props<{ username: string, roles: string[] }>()
+);
+
+export const getAuthenticatedUserFailed = createAction(
+    '[App] Get Authenticated User Failed'
+);

@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="submit()">
+<form [formGroup]="logInForm" (ngSubmit)="submit()">
     <progress-text-input 
         [control]="username" 
         [labelText]="'Benutzername'"
@@ -9,5 +9,8 @@
         [labelText]="'Passwort'"
         [errorText]="'Passwort eingeben'">
     </progress-password-input>
-    <button mat-button type="submit" [disabled]="loginForm.invalid">LogIn</button>
+    <mat-error *ngIf="logInFailed$ | async, let logInFailed">Benutzername oder Passwort nicht korrekt</mat-error>
+    <button mat-button type="submit" [disabled]="logInForm.invalid">LogIn</button>
 </form>
+<p>Account erstellen?</p>
+<a routerLink="/registration">Registrieren</a>

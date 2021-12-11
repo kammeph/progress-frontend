@@ -15,12 +15,16 @@ export class AuthService {
       .set('username', username)
       .set('password', password);
 
-  return this.http.post<Token>('/api/auth',
-    body.toString(),
-    {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-    }
-  );
+    return this.http.post<Token>('/api/auth',
+      body.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    );
+  }
+
+  register(username: string, password: string): Observable<any> {
+    return this.http.post('/api/auth/register', JSON.stringify({ username: username, password: password }));
   }
 }
