@@ -1,0 +1,6 @@
+<nav *ngIf="isLoggedIn$ | async">
+    <ul>
+        <li><a routerLink='/volumecalculator'>Volumenrechner</a></li>
+        <li><a (click)="logout()" >Logout</a></li>
+    </ul>
+</nav>

@@ -18,6 +18,8 @@
         [errorText]="'Passwort eingeben'">
     </progress-password-input>
 
+    <p *ngIf="registrationSuccess$ | async">Anmeldung war erfolgreich</p>
+
     <mat-error *ngIf="password.valid && passwordRepeat.valid && password.value != passwordRepeat.value">
         Passwörter stimmen nicht überein!
     </mat-error>

@@ -8,28 +8,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 
+import { NgxsModule } from '@ngxs/store';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './screens/login/login.component';
-import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './state/app.effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { PasswordInputComponent } from './presenters/password-input/password-input.component';
 import { TextInputComponent } from './presenters/text-input/text-input.component';
 import { AuthInterceptor } from './lib/interceptors/auth.interceptor/auth.interceptor';
 import { ErrorInterceptor } from './lib/interceptors/error.interceptor/error.interceptor';
 import { FormatInterceptor } from './lib/interceptors/format.interceptor/format.interceptor';
 import { RegistrationComponent } from './screens/registration/registration.component';
-import { logInReducer } from './screens/login/state/login.reducer';
-import { registrationReducer } from './screens/registration/state/registration.reducer';
-import { appReducer } from './state/app.reducer';
-import { LogInEffects } from './screens/login/state/login.effects';
-import { RegistrationEffects } from './screens/registration/state/registration.effects';
+import { NavigationComponent } from './screens/navigation/navigation.component';
+import { AppState } from './store/app.state';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+
+
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RegistrationEffects } from './screens/registration/state/registration.e
     LoginComponent,
     PasswordInputComponent,
     TextInputComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -56,10 +58,19 @@ import { RegistrationEffects } from './screens/registration/state/registration.e
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    StoreModule.forRoot({ app: appReducer, login: logInReducer, registration: registrationReducer }),
-    EffectsModule.forRoot([AppEffects, LogInEffects, RegistrationEffects]),
     BrowserAnimationsModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    NgxsModule.forRoot([AppState], {
+      developmentMode: !environment.production
+    }),
+    NgxsStoragePluginModule.forRoot({
+      key: 'app'
+    }),
+    NgxsRouterPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      name: 'smart-forester-redux',
+      disabled: environment.production
+    }),
   ],
   providers: [
     {

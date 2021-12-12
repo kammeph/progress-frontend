@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { selectLogInFailed } from './state/login.selectors';
-import { tryLogIn } from './state/login.actions';
+import { Select, Store } from '@ngxs/store';
+import { Login } from 'src/app/store/app.action';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'progress-login',
@@ -13,9 +13,9 @@ import { tryLogIn } from './state/login.actions';
 })
 export class LoginComponent implements OnInit {
 
+  @Select(AppState.loginFailed) logInFailed$: Observable<boolean>;
+
   logInForm: FormGroup;
-  logInFailed$: Observable<boolean>;
-  accessToken$: Observable<string>;
 
   constructor(
     private store: Store,
@@ -30,16 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
-    this.logInFailed$ = this.store.select(selectLogInFailed).pipe(
-      tap((logInFailed) => {
-        if (logInFailed)
-          this.logInForm.reset();
-        for (let control in this.logInForm.controls) {
-          this.logInForm.controls[control].setErrors(null);
-        }
-      }),
-    );
-    this.store.dispatch(tryLogIn(this.logInForm.value));
+    this.store.dispatch(new Login(this.username?.value, this.password?.value));
   }
 
   get username() {

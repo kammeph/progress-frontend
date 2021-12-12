@@ -9,7 +9,7 @@
         [labelText]="'Passwort'"
         [errorText]="'Passwort eingeben'">
     </progress-password-input>
-    <mat-error *ngIf="logInFailed$ | async, let logInFailed">Benutzername oder Passwort nicht korrekt</mat-error>
+    <mat-error *ngIf="logInFailed$ | async">Benutzername oder Passwort nicht korrekt</mat-error>
     <button mat-button type="submit" [disabled]="logInForm.invalid">LogIn</button>
 </form>
 <p>Account erstellen?</p>

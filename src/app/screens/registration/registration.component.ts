@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
-import { tryRegister } from './state/registration.actions';
-import { selectRegistrationFailed, selectRegistrationSuccess } from './state/registration.selectors';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Register } from 'src/app/store/app.action';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'progress-register',
@@ -13,8 +13,8 @@ import { selectRegistrationFailed, selectRegistrationSuccess } from './state/reg
 })
 export class RegistrationComponent implements OnInit {
 
-  registrationSuccess$: Observable<boolean>;
-  registrationFailed$: Observable<boolean>;
+  @Select(AppState.registrationSuccess) registrationSuccess$: Observable<boolean>;
+  @Select(AppState.registrationFailed) registrationFailed$: Observable<boolean>;
   registerForm: FormGroup;
 
   constructor(
@@ -43,16 +43,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   submit() {
-    this.store.select(selectRegistrationSuccess).pipe(
-      tap(() => this.snackBar.open('Erfolgreich registriert', undefined, { duration: 3000 }))
-    ).subscribe();
-    this.store.select(selectRegistrationFailed).pipe(
-      tap(() => this.snackBar.open('Registrierung fehlgeschlagen', undefined, { duration: 3000 }))
-    );
-    this.store.dispatch(tryRegister({
-      username: this.username.value,
-      password: this.password.value
-    }));
+    this.store.dispatch(new Register(this.username?.value, this.password?.value));
   }
 
 }
