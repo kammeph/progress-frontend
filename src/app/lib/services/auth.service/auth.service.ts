@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from '../../../app.models';
 
@@ -8,7 +8,11 @@ import { Token } from '../../../app.models';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  private prefix = 'auth';
+
+  constructor(
+    private http: HttpClient,
+    @Inject('API_URL') private apiUrl: string) { }
 
   authenticate(username: string, password: string): Observable<Token> {
     const body = new HttpParams()
@@ -16,7 +20,7 @@ export class AuthService {
       .set('username', username)
       .set('password', password);
 
-    return this.http.post<Token>('/api/auth/token',
+    return this.http.post<Token>(`${this.apiUrl}/${this.prefix}/token`,
       body.toString(),
       {
         headers: new HttpHeaders()
@@ -31,7 +35,7 @@ export class AuthService {
     .set('grant_type', 'refresh_token')
     .set('refresh_token', token);
 
-    return this.http.post<Token>('/api/auth/token',
+    return this.http.post<Token>(`${this.apiUrl}/${this.prefix}/token`,
     body.toString(),
     {
       headers: new HttpHeaders()
@@ -40,6 +44,8 @@ export class AuthService {
   }
 
   register(username: string, password: string): Observable<any> {
-    return this.http.post('/api/auth/register', JSON.stringify({ username: username, password: password }));
+    return this.http.post(
+      `${this.apiUrl}/${this.prefix}/register`,
+      JSON.stringify({ username: username, password: password }));
   }
 }

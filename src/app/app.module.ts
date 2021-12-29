@@ -85,6 +85,7 @@ import { UserComponent } from './screens/user/user.component';
       useClass: ErrorInterceptor,
       multi: true
     },
+    { provide: 'API_URL', useValue: environment.apiEndpoint }
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: FormatInterceptor,

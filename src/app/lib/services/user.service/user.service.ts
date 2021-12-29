@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/app.models';
 
@@ -8,9 +8,13 @@ import { User } from 'src/app/app.models';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  private prefix = 'users';
+
+  constructor(
+    private http: HttpClient,
+    @Inject('API_URL') private apiUrl: string) { }
 
   getMe() : Observable<User> {
-    return this.http.get<User>('/api/users/get/me');
+    return this.http.get<User>(`${this.apiUrl}/${this.prefix}/get/me`);
   }
 }
