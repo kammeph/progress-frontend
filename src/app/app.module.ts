@@ -29,6 +29,7 @@ import { RegistrationComponent } from './screens/registration/registration.compo
 import { NavigationComponent } from './screens/navigation/navigation.component';
 import { AppState } from './store/app.state';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { UserComponent } from './screens/user/user.component';
 
 
 
@@ -39,7 +40,8 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     PasswordInputComponent,
     TextInputComponent,
     RegistrationComponent,
-    NavigationComponent
+    NavigationComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

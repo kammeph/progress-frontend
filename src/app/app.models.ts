@@ -1,6 +1,7 @@
 export interface Token {
-    accessToken: string;
-    tokenType: string;
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
 }
 
 export interface User {

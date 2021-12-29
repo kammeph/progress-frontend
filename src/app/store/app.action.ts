@@ -3,6 +3,10 @@ export class Login {
     constructor(public username: string, public password: string) { }
 }
 
+export class RefreshToken {
+    static readonly type = '[App] Refresh Token';
+}
+
 export class Logout {
     static readonly type = '[App] Logout';
 }
@@ -10,8 +14,4 @@ export class Logout {
 export class Register {
     static readonly type = '[App] Register';
     constructor(public username: string, public password: string) { }
-}
-
-export class GetAuthenticatedUser {
-    static readonly type = '[App] Get Authenticated User';
 }

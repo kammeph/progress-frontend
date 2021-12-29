@@ -1,10 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Navigate } from '@ngxs/router-plugin';
 import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/store';
-import { catchError, delay, mergeMap, of, tap } from 'rxjs';
+import { catchError, delay, mergeMap, of, tap, throwError } from 'rxjs';
 import { AuthService } from '../lib/services/auth.service/auth.service';
-import { UserService } from '../lib/services/user.service/user.service';
-import { GetAuthenticatedUser, Login, Logout, Register } from './app.action';
+import { TokenService } from '../lib/services/token.service/token.service';
+import { Login, Logout, RefreshToken, Register } from './app.action';
 
 export class AppStateModel {
     isLoggedIn: boolean;
@@ -12,9 +13,6 @@ export class AppStateModel {
     registrationSuccess: boolean;
     registrationFailed: boolean;
     isOnline: boolean;
-    username: string;
-    roles: string[];
-    token: string;
 }
 
 @State<AppStateModel>({
@@ -44,28 +42,52 @@ export class AppState implements NgxsOnInit {
         return state.registrationFailed
     }
 
-    @Selector()
-    static token(state: AppStateModel) {
-        return state.token
-    }
-
     constructor(
         private authService: AuthService,
-        private userService: UserService) { }
+        private tokenService: TokenService) { }
 
     ngxsOnInit(ctx?: StateContext<AppStateModel>) { }
 
     @Action(Login)
     login({ patchState, dispatch }: StateContext<AppStateModel>, { username, password }: Login) {
         return this.authService.authenticate(username, password).pipe(
-            tap(token => patchState({ token: token.accessToken })),
-            mergeMap(() => dispatch(new GetAuthenticatedUser())),
+            tap(authData => {
+                this.tokenService.setToken(authData.access_token);
+                this.tokenService.setRefreshToken(authData.refresh_token);
+                patchState({
+                    isLoggedIn: true,
+                    loginFailed: false,
+                    registrationSuccess: false,
+                    registrationFailed: false,
+                })
+            }),
+            mergeMap(() => dispatch(new Navigate(['']))),
             catchError(() => of(patchState({ loginFailed: true })))
         );
     }
 
+    @Action(RefreshToken)
+    refreshToken({ dispatch }: StateContext<AppStateModel>) {
+        const refreshToken = this.tokenService.getRefreshToken();
+        if (refreshToken) {
+            return this.authService.refreshToken(refreshToken).pipe(
+                tap(token => this.tokenService.setToken(token.access_token)),
+                catchError((err: HttpErrorResponse) => {
+                    if (err.status == 401) {
+                        return dispatch(new Logout())
+                    }
+                    return throwError(() => err);
+                })
+            )
+        } else {
+            return dispatch(new Logout());
+        }
+    }
+
     @Action(Logout)
     logout({ setState, dispatch }: StateContext<AppStateModel>) {
+        this.tokenService.clearToken();
+        this.tokenService.clearRefreshToken();
         setState(new AppStateModel());
         dispatch(new Navigate(['/login']));
     }
@@ -77,21 +99,6 @@ export class AppState implements NgxsOnInit {
             delay(2000),
             mergeMap(() => dispatch(new Navigate(['/login']))),
             catchError(() => of(patchState({ registrationFailed: true })))
-        )
-    }
-
-    @Action(GetAuthenticatedUser)
-    getAuthenticatedUser({ patchState, dispatch }: StateContext<AppStateModel>) {
-        return this.userService.getMe().pipe(
-            tap(user => patchState({ 
-                isLoggedIn: true,
-                loginFailed: false,
-                registrationSuccess: false,
-                registrationFailed: false,
-                username: user.username, 
-                roles: user.roles })),
-            mergeMap(() => dispatch(new Navigate(['']))),
-            catchError(() => of(patchState({ loginFailed: true })))
         )
     }
 }

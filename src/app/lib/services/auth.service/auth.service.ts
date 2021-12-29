@@ -12,16 +12,31 @@ export class AuthService {
 
   authenticate(username: string, password: string): Observable<Token> {
     const body = new HttpParams()
+      .set('grant_type', 'password')
       .set('username', username)
       .set('password', password);
 
-    return this.http.post<Token>('/api/auth',
+    return this.http.post<Token>('/api/auth/token',
       body.toString(),
       {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
       }
     );
+  }
+
+  refreshToken(token: string): Observable<Token> {
+
+    const body = new HttpParams()
+    .set('grant_type', 'refresh_token')
+    .set('refresh_token', token);
+
+    return this.http.post<Token>('/api/auth/token',
+    body.toString(),
+    {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
   }
 
   register(username: string, password: string): Observable<any> {

@@ -3,19 +3,22 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { TokenService } from '../../services/token.service/token.service';
+import { RefreshToken } from 'src/app/store/app.action';
 import { Store } from '@ngxs/store';
-import { AppState } from 'src/app/store/app.state';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private tokenService: TokenService) { }
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let token = this.store.selectSnapshot(AppState.token);
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (!request.headers.has('Content-Type')) {
       request = request.clone({
@@ -23,12 +26,24 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    if (token && request.url !== '/api/auth') {
-      request = request.clone({
-        headers: request.headers.set('Authorization', "Bearer " + token)
-      });
-    }
+    return next.handle(this.addTokenHeader(request)).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status == 401 && request.url != '/api/auth/token') {
+          return this.store.dispatch(new RefreshToken()).pipe(
+            switchMap(() => next.handle(this.addTokenHeader(request)))
+          );
+        } else {
+          return throwError(() => err);
+        }
+      })
+    );
+  }
 
-    return next.handle(request);
+  addTokenHeader(request: HttpRequest<any>): HttpRequest<any> {
+    const token = this.tokenService.getToken();
+    if (token && request.url !== '/api/auth/token') {
+      request = request.clone({ headers: request.headers.set('Authorization', "Bearer " + token) });
+    }
+    return request;
   }
 }
