@@ -2,17 +2,16 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from '../../../app.models';
+import { ApiBaseService } from '../api-base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends ApiBaseService{
 
-  private prefix = 'auth';
-
-  constructor(
-    private http: HttpClient,
-    @Inject('API_URL') private apiUrl: string) { }
+  constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
+      super(http, apiUrl, 'auth');
+    }
 
   authenticate(username: string, password: string): Observable<Token> {
     const body = new HttpParams()
@@ -30,7 +29,6 @@ export class AuthService {
   }
 
   refreshToken(token: string): Observable<Token> {
-
     const body = new HttpParams()
     .set('grant_type', 'refresh_token')
     .set('refresh_token', token);
