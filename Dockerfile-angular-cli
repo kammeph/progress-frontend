@@ -1,5 +1,0 @@
-FROM node:16.13.1-alpine
-
-WORKDIR /home
-
-RUN npm install -g @angular/cli@13.0.3
