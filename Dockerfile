@@ -3,12 +3,12 @@ FROM node:16.13.1-alpine as build
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["progress/package.json", "progress/package-lock.json*", "./"]
 
 # install the dependencies
 RUN npm install --silent 
 
-COPY . .
+COPY ./progress .
 
 # run the build process
 RUN npm run build --prod
