@@ -7,11 +7,11 @@ import { ApiBaseService } from '../api-base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends ApiBaseService{
+export class AuthService extends ApiBaseService {
 
   constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
-      super(http, apiUrl, 'auth');
-    }
+    super(http, apiUrl, 'auth');
+  }
 
   authenticate(username: string, password: string): Observable<Token> {
     const body = new HttpParams()
@@ -30,15 +30,15 @@ export class AuthService extends ApiBaseService{
 
   refreshToken(token: string): Observable<Token> {
     const body = new HttpParams()
-    .set('grant_type', 'refresh_token')
-    .set('refresh_token', token);
+      .set('grant_type', 'refresh_token')
+      .set('refresh_token', token);
 
     return this.http.post<Token>(`${this.apiUrl}/${this.prefix}/token`,
-    body.toString(),
-    {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-    });
+      body.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      });
   }
 
   register(username: string, password: string): Observable<any> {

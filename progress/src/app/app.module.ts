@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -30,8 +31,8 @@ import { NavigationComponent } from './screens/navigation/navigation.component';
 import { AppState } from './store/app.state';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { UserComponent } from './screens/user/user.component';
-
-
+import { StrengthValuesComponent } from './screens/strength-values/strength-values.component';
+import { StrengthValueState } from './screens/strength-values/store/strength-value.state';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UserComponent } from './screens/user/user.component';
     TextInputComponent,
     RegistrationComponent,
     NavigationComponent,
-    UserComponent
+    UserComponent,
+    StrengthValuesComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ import { UserComponent } from './screens/user/user.component';
     MatButtonModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatExpansionModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -61,11 +64,11 @@ import { UserComponent } from './screens/user/user.component';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    NgxsModule.forRoot([AppState], {
+    NgxsModule.forRoot([AppState, StrengthValueState], {
       developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({
-      key: 'app'
+      key: [AppState, StrengthValueState]
     }),
     NgxsRouterPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),

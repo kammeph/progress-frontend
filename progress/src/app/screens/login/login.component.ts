@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Login } from 'src/app/store/app.action';
 import { AppState } from 'src/app/store/app.state';
@@ -19,14 +18,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private fb: FormBuilder,
-    private router: Router) { }
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({
       username: ['', [ Validators.required ]],
       password: ['', [ Validators.required ]]
-    })
+    });
   }
 
   submit(): void {

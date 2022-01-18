@@ -11,6 +11,8 @@ export class TextInputComponent implements OnInit {
   @Input() control: FormControl;
   @Input() labelText: string;
   @Input() errorText: string;
+  @Input() unit: string;
+  @Input() type = 'text';
 
   constructor() { }
 
