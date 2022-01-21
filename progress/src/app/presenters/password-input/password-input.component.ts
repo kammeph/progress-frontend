@@ -4,18 +4,15 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'progress-password-input',
   templateUrl: './password-input.component.html',
-  styleUrls: ['./password-input.component.scss']
+  styleUrls: ['./password-input.component.scss'],
 })
 export class PasswordInputComponent implements OnInit {
-
   @Input() control: FormControl;
   @Input() labelText: string;
   @Input() errorText: string;
   hide = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

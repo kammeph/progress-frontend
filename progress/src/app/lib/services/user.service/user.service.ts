@@ -5,15 +5,14 @@ import { User } from 'src/app/app.models';
 import { ApiBaseService } from '../api-base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserService extends ApiBaseService{
-
+export class UserService extends ApiBaseService {
   constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
-    super(http, apiUrl, 'users')
-   }
+    super(http, apiUrl, 'users');
+  }
 
-  getMe() : Observable<User> {
+  getMe(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${this.prefix}/get/me`);
   }
 }

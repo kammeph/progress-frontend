@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
+  private ACCESS_TOKEN_KEY = 'TOKEN';
+  private REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
 
-  private ACCESS_TOKEN_KEY = "TOKEN";
-  private REFRESH_TOKEN_KEY = "REFRESH_TOKEN";
-
-  constructor() { }
+  constructor() {}
 
   getToken() {
     return window.sessionStorage.getItem(this.ACCESS_TOKEN_KEY);

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: window['env']['apiEndpoint'] || '/api'
+  apiEndpoint: window['env']['apiEndpoint'] || '/api',
 };

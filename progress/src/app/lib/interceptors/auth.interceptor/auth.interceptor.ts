@@ -13,24 +13,24 @@ import { Store } from '@ngxs/store';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private store: Store, private tokenService: TokenService) {}
 
-  constructor(
-    private store: Store,
-    private tokenService: TokenService) { }
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     if (!request.headers.has('Content-Type')) {
       request = request.clone({
-        headers: request.headers.set('Content-Type', 'application/json')
+        headers: request.headers.set('Content-Type', 'application/json'),
       });
     }
 
     return next.handle(this.addTokenHeader(request)).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status == 401 && request.url != '/api/auth/token') {
-          return this.store.dispatch(new RefreshToken()).pipe(
-            switchMap(() => next.handle(this.addTokenHeader(request)))
-          );
+          return this.store
+            .dispatch(new RefreshToken())
+            .pipe(switchMap(() => next.handle(this.addTokenHeader(request))));
         } else {
           return throwError(() => err);
         }
@@ -41,7 +41,9 @@ export class AuthInterceptor implements HttpInterceptor {
   addTokenHeader(request: HttpRequest<any>): HttpRequest<any> {
     const token = this.tokenService.getToken();
     if (token && request.url !== '/api/auth/token') {
-      request = request.clone({ headers: request.headers.set('Authorization', "Bearer " + token) });
+      request = request.clone({
+        headers: request.headers.set('Authorization', 'Bearer ' + token),
+      });
     }
     return request;
   }

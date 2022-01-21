@@ -8,9 +8,8 @@ describe('StrengthValuesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StrengthValuesComponent ]
-    })
-    .compileComponents();
+      declarations: [StrengthValuesComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,20 @@
 <form [formGroup]="logInForm" (ngSubmit)="submit()">
-    <progress-text-input 
-        [control]="username" 
-        [labelText]="'Benutzername'"
-        [errorText]="'Benutzernamen eingeben'">
-    </progress-text-input>
-    <progress-password-input
-        [control]="password"
-        [labelText]="'Passwort'"
-        [errorText]="'Passwort eingeben'">
-    </progress-password-input>
-    <mat-error *ngIf="logInFailed$ | async">Benutzername oder Passwort nicht korrekt</mat-error>
-    <button mat-button type="submit" [disabled]="logInForm.invalid">LogIn</button>
+  <progress-text-input
+    [control]="username"
+    [labelText]="'Benutzername'"
+    [errorText]="'Benutzernamen eingeben'"
+  >
+  </progress-text-input>
+  <progress-password-input
+    [control]="password"
+    [labelText]="'Passwort'"
+    [errorText]="'Passwort eingeben'"
+  >
+  </progress-password-input>
+  <mat-error *ngIf="logInFailed$ | async"
+    >Benutzername oder Passwort nicht korrekt</mat-error
+  >
+  <button mat-button type="submit" [disabled]="logInForm.invalid">LogIn</button>
 </form>
 <p>Account erstellen?</p>
 <a routerLink="/registration">Registrieren</a>

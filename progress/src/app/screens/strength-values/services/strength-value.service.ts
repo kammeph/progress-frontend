@@ -5,10 +5,9 @@ import { ApiBaseService } from 'src/app/lib/services/api-base.service';
 import { StrengthValue } from '../strength-value.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StrengthValueService extends ApiBaseService {
-
   constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
     super(http, apiUrl, 'strength-values');
   }
@@ -18,6 +17,9 @@ export class StrengthValueService extends ApiBaseService {
   }
 
   update(strengthValues: StrengthValue[]): Observable<StrengthValue[]> {
-    return this.http.put<StrengthValue[]>(`${this.apiUrl}/${this.prefix}`, strengthValues);
+    return this.http.put<StrengthValue[]>(
+      `${this.apiUrl}/${this.prefix}`,
+      strengthValues
+    );
   }
 }

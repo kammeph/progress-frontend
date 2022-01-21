@@ -6,16 +6,14 @@ import { UserService } from 'src/app/lib/services/user.service/user.service';
 @Component({
   selector: 'progress-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-
   user$: Observable<User>;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.user$ = this.userService.getMe();
   }
-
 }

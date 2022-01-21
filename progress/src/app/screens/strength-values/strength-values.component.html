@@ -1,33 +1,44 @@
 <h1>Kraftwerte</h1>
 <form [formGroup]="mainForm">
-    <p>Total: {{ mainForm.controls['total'].value | number }} kg</p>
-    <mat-accordion formArrayName="strengthValues">
-        <mat-expansion-panel *ngFor="let strengthValue of strengthValuesForms?.controls; let i = index" [formGroupName]="i">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ strengthValuesForms.controls[i].value.name }}
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{ strengthValuesForms.controls[i].value.oneRepMax }} kg
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <progress-text-input 
-                [control]="getWeight(i)" 
-                [labelText]="'Gewicht'"
-                [errorText]="'Das Gewicht muss größer mindestens 1kg betragen'"
-                [type]="'number'"
-                [unit]="'kg'">
-            </progress-text-input>
-            <progress-text-input 
-                [control]="getReps(i)" 
-                [labelText]="'Wiederholungen'"
-                [errorText]="'Die Wiederholungszahl muss zwischen 1 und 12 Whg. liegen'"
-                [type]="'number'"
-                [unit]="'Wdh'">
-            </progress-text-input>
-        </mat-expansion-panel>
-    </mat-accordion>
+  <p>Total: {{ mainForm.controls["total"].value | number }} kg</p>
+  <mat-accordion formArrayName="strengthValues">
+    <mat-expansion-panel
+      *ngFor="let strengthValue of strengthValuesForms?.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ strengthValuesForms.controls[i].value.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ strengthValuesForms.controls[i].value.oneRepMax }} kg
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <progress-text-input
+        [control]="getWeight(i)"
+        [labelText]="'Gewicht'"
+        [errorText]="'Das Gewicht muss größer mindestens 1kg betragen'"
+        [type]="'number'"
+        [unit]="'kg'"
+      >
+      </progress-text-input>
+      <progress-text-input
+        [control]="getReps(i)"
+        [labelText]="'Wiederholungen'"
+        [errorText]="'Die Wiederholungszahl muss zwischen 1 und 12 Whg. liegen'"
+        [type]="'number'"
+        [unit]="'Wdh'"
+      >
+      </progress-text-input>
+    </mat-expansion-panel>
+  </mat-accordion>
 
-    <button mat-button type="button" [disabled]="mainForm.invalid" (click)="save()">Speichern</button>
-
+  <button
+    mat-button
+    type="button"
+    [disabled]="mainForm.invalid"
+    (click)="save()"
+  >
+    Speichern
+  </button>
 </form>

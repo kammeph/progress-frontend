@@ -8,12 +8,12 @@ import { UserComponent } from './screens/user/user.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: '', component: UserComponent},
-  { path: 'strength-values', component: StrengthValuesComponent}
+  { path: '', component: UserComponent },
+  { path: 'strength-values', component: StrengthValuesComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

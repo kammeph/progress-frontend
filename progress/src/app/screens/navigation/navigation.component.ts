@@ -7,15 +7,14 @@ import { AppState } from 'src/app/store/app.state';
 @Component({
   selector: 'progress-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-
   @Select(AppState.isLoggedIn) isLoggedIn$: Observable<boolean>;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   logout() {
     this.store.dispatch(new Logout());

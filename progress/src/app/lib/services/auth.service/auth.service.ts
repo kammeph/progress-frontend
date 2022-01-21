@@ -5,10 +5,9 @@ import { Token } from '../../../app.models';
 import { ApiBaseService } from '../api-base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService extends ApiBaseService {
-
   constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
     super(http, apiUrl, 'auth');
   }
@@ -19,11 +18,14 @@ export class AuthService extends ApiBaseService {
       .set('username', username)
       .set('password', password);
 
-    return this.http.post<Token>(`${this.apiUrl}/${this.prefix}/token`,
+    return this.http.post<Token>(
+      `${this.apiUrl}/${this.prefix}/token`,
       body.toString(),
       {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
+        headers: new HttpHeaders().set(
+          'Content-Type',
+          'application/x-www-form-urlencoded'
+        ),
       }
     );
   }
@@ -33,17 +35,22 @@ export class AuthService extends ApiBaseService {
       .set('grant_type', 'refresh_token')
       .set('refresh_token', token);
 
-    return this.http.post<Token>(`${this.apiUrl}/${this.prefix}/token`,
+    return this.http.post<Token>(
+      `${this.apiUrl}/${this.prefix}/token`,
       body.toString(),
       {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      });
+        headers: new HttpHeaders().set(
+          'Content-Type',
+          'application/x-www-form-urlencoded'
+        ),
+      }
+    );
   }
 
   register(username: string, password: string): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/${this.prefix}/register`,
-      JSON.stringify({ username: username, password: password }));
+      JSON.stringify({ username: username, password: password })
+    );
   }
 }

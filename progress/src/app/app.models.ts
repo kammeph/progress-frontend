@@ -1,10 +1,10 @@
 export interface Token {
-    access_token: string;
-    refresh_token: string;
-    token_type: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
 }
 
 export interface User {
-    username: string;
-    roles: string[];
+  username: string;
+  roles: string[];
 }
