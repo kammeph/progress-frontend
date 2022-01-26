@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="exercise-form">
+  <div class="scrollable-content">
+    <progress-text-input [control]="nameControl" [labelText]="'Name'" [errorText]="'Namen der Übung eingeben'">
+    </progress-text-input>
+    <div formArrayName="loadingFactors">
+      <progress-text-input
+        *ngFor="let loadingFactor of loadingFactorForms.controls; let i = index"
+        [control]="loadingFactor.get('value')"
+        [labelText]="loadingFactor.get('muscleGroup').value"
+        [errorText]="'Der Wert muss zwischen 0 und 1 liegen'"
+        [type]="'number'"
+      >
+      </progress-text-input>
+    </div>
+  </div>
+  <div class="btn-area">
+    <button mat-button (click)="close()">Abbrechen</button>
+    <button mat-button (click)="save()">Speichern</button>
+  </div>
+</form>

@@ -1,6 +1,7 @@
 <nav *ngIf="isLoggedIn$ | async">
   <ul>
     <li><a routerLink="/strength-values">Kraftwerte</a></li>
+    <li><a routerLink="/exercises">Übungen</a></li>
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>

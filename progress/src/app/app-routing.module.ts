@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ExercisesComponent } from './screens/exercises/exercises.component';
 import { LoginComponent } from './screens/login/login.component';
 import { RegistrationComponent } from './screens/registration/registration.component';
 import { StrengthValuesComponent } from './screens/strength-values/strength-values.component';
@@ -10,10 +11,11 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: '', component: UserComponent },
   { path: 'strength-values', component: StrengthValuesComponent },
+  { path: 'exercises', component: ExercisesComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

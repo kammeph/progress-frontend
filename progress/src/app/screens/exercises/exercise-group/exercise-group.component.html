@@ -1,0 +1,29 @@
+<mat-expansion-panel *ngIf="!edit" hideToggle>
+  <mat-expansion-panel-header class="inline">
+    <p class="group-label">{{ exerciseGroup.name }}</p>
+    <button mat-icon-button (click)="edit = true">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-expansion-panel-header>
+  <div *ngFor="let exercise of exercises" class="inline">
+    <p class="exercise-label" (click)="open(exercise)">{{ exercise.name }}</p>
+    <button mat-icon-button (click)="deleteExercise(exercise.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <button mat-button (click)="addExercise()">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-expansion-panel>
+
+<form [formGroup]="mainForm" *ngIf="edit" class="inline group-edit-input">
+  <mat-form-field>
+    <input matInput type="text" formControlName="name" />
+  </mat-form-field>
+  <button mat-icon-button (click)="update()">
+    <mat-icon>done</mat-icon>
+  </button>
+</form>

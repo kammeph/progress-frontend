@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -33,6 +34,10 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { UserComponent } from './screens/user/user.component';
 import { StrengthValuesComponent } from './screens/strength-values/strength-values.component';
 import { StrengthValueState } from './screens/strength-values/store/strength-value.state';
+import { ExercisesComponent } from './screens/exercises/exercises.component';
+import { ExerciseState } from './screens/exercises/store/exercise.state';
+import { ExerciseGroupComponent } from './screens/exercises/exercise-group/exercise-group.component';
+import { ExerciseEditFormComponent } from './screens/exercises/exercise-edit-form/exercise-edit-form.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +49,9 @@ import { StrengthValueState } from './screens/strength-values/store/strength-val
     NavigationComponent,
     UserComponent,
     StrengthValuesComponent,
+    ExercisesComponent,
+    ExerciseGroupComponent,
+    ExerciseEditFormComponent
   ],
   imports: [
     BrowserModule,
@@ -55,46 +63,47 @@ import { StrengthValueState } from './screens/strength-values/store/strength-val
     MatSnackBarModule,
     MatSelectModule,
     MatExpansionModule,
+    MatBottomSheetModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
+      registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    NgxsModule.forRoot([AppState, StrengthValueState], {
-      developmentMode: !environment.production,
+    NgxsModule.forRoot([AppState, StrengthValueState, ExerciseState], {
+      developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({
-      key: [AppState, StrengthValueState],
+      key: [AppState, StrengthValueState, ExerciseState]
     }),
     NgxsRouterPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({
       name: 'smart-forester-redux',
-      disabled: environment.production,
-    }),
+      disabled: environment.production
+    })
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true,
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
-      multi: true,
+      multi: true
     },
-    { provide: 'API_URL', useValue: environment.apiEndpoint },
+    { provide: 'API_URL', useValue: environment.apiEndpoint }
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: FormatInterceptor,
     //   multi: true
     // }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

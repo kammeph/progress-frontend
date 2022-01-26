@@ -1,0 +1,9 @@
+<mat-accordion>
+  <progress-exercise-group
+    *ngFor="let exerciseGroup of exerciseGroups$ | async"
+    [exerciseGroup]="exerciseGroup"
+  ></progress-exercise-group>
+</mat-accordion>
+<button mat-button (click)="createExerciseGroup()">
+  <mat-icon>add</mat-icon>
+</button>

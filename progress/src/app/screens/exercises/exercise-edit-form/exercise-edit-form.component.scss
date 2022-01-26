@@ -1,0 +1,23 @@
+.exercise-form {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 'scrollable-content' 'btn-area';
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.scrollable-content {
+  padding: 5px;
+  grid-area: scrollable-content;
+  overflow: auto;
+}
+
+.btn-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+  grid-area: btn-area;
+}
