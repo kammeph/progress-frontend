@@ -1,8 +1,8 @@
 {
   "name": "Progress",
-  "short_name": "progress",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "short_name": "Progress",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
