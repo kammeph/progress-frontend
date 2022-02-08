@@ -11,7 +11,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status != 401 || request.url != '/api/auth/token') {
-          this.snackBar.open(`${err.error} (${err.status}: ${err.statusText})`, undefined, { duration: 3000 });
+          this.snackBar.open(`${err.error.detail} (${err.status}: ${err.statusText})`, undefined, { duration: 3000 });
           console.log('HttpError: ', err);
         }
         return throwError(() => err);
