@@ -1,23 +1,18 @@
 <h1>Kraftwerte</h1>
 <form [formGroup]="mainForm">
-  <p>Total: {{ mainForm.controls["total"].value | number }} kg</p>
+  <p>Total: {{ mainForm.controls['total'].value | number }} kg</p>
   <mat-accordion formArrayName="strengthValues">
-    <mat-expansion-panel
-      *ngFor="let strengthValue of strengthValuesForms?.controls; let i = index"
-      [formGroupName]="i"
-    >
+    <mat-expansion-panel *ngFor="let strengthValue of strengthValuesForms?.controls; let i = index" [formGroupName]="i">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ strengthValuesForms.controls[i].value.name }}
         </mat-panel-title>
-        <mat-panel-description>
-          {{ strengthValuesForms.controls[i].value.oneRepMax }} kg
-        </mat-panel-description>
+        <mat-panel-description> {{ strengthValuesForms.controls[i].value.oneRepMax }} kg </mat-panel-description>
       </mat-expansion-panel-header>
       <progress-text-input
         [control]="getWeight(i)"
         [labelText]="'Gewicht'"
-        [errorText]="'Das Gewicht muss größer mindestens 1kg betragen'"
+        [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
         [type]="'number'"
         [unit]="'kg'"
       >
@@ -33,12 +28,7 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <button
-    mat-button
-    type="button"
-    [disabled]="mainForm.invalid"
-    (click)="save()"
-  >
+  <button mat-raised-button color="primary" type="button" [disabled]="mainForm.invalid" (click)="save()">
     Speichern
   </button>
 </form>
