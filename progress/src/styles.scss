@@ -39,19 +39,16 @@ $progress-frontend-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.logo {
-  width: 10em;
-  padding: 0.5em;
-  background-color: black;
 }
 
 // Disable spin buttons for inputs with type numberk
@@ -63,8 +60,6 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-
-$background-overlay: rgba(35, 35, 35, 0.75);
 
 /* scroll bar*/
 ::-webkit-scrollbar {

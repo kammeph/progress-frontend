@@ -24,9 +24,5 @@ $typography: mat-typography-config(
 );
 
 a {
-  all: unset;
   font-family: 'Anton', sans-serif, 'google';
-  color: black;
-  cursor: pointer;
-  text-decoration: none;
 }

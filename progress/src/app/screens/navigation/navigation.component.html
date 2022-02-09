@@ -1,7 +1,17 @@
-<nav *ngIf="isLoggedIn$ | async">
-  <ul>
-    <li><a routerLink="/strength-values">Kraftwerte</a></li>
-    <li><a routerLink="/exercises">Übungen</a></li>
-    <li><a (click)="logout()">Logout</a></li>
-  </ul>
-</nav>
+<header>
+  <img src="../../../assets/icons/kk_logo.png" class="logo" />
+  <button class="nav-toggle-open" *ngIf="isLoggedIn$ | async">
+    <span></span>
+  </button>
+  <button class="nav-toggle-close" *ngIf="isLoggedIn$ | async">
+    <span></span>
+  </button>
+  <nav *ngIf="isLoggedIn$ | async">
+    <ul>
+      <li><a routerLink="/strength-values">Kraftwerte</a></li>
+      <!-- <li><a routerLink="/volumecalculator">Volumenrechner</a></li> -->
+      <li><a routerLink="/exercises">Übungen</a></li>
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </nav>
+</header>
