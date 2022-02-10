@@ -1,0 +1,47 @@
+@import 'progress-ui-theme.scss';
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-card {
+    width: min(400px, 80%);
+}
+
+.login-card > mat-card-header {
+    @include mat-typography-level-to-styles($typography, title);
+    display: flex;
+    justify-content: center;
+}
+
+.login-card > mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.link-section {
+    margin: 2em;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.link-section > span {
+    @include mat-typography-level-to-styles($typography, body-1);
+}
+
+.link-section > a {
+    all: unset;
+    @include mat-typography-level-to-styles($typography, button);
+    cursor: pointer;
+}

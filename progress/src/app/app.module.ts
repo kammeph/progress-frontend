@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatCardModule } from '@angular/material/card';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -64,6 +65,7 @@ import { ExerciseEditFormComponent } from './screens/exercises/exercise-edit-for
     MatSelectModule,
     MatExpansionModule,
     MatBottomSheetModule,
+    MatCardModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

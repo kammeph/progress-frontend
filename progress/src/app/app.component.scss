@@ -1,0 +1,30 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 
+    'header'
+    'main'
+    'footer';
+}
+
+.container > header {
+  grid-area: header;
+}
+
+.container > main {
+  grid-area: main;
+  /* padding: 0; 15px 5px 10px 5px; */
+  overflow: auto;
+}
+
+.container > footer {
+  grid-area: footer;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
