@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ExerciseEditFormComponent } from './exercise-edit-form/exercise-edit-form.component';
-import { Exercise, ExerciseGroup } from './exercise.model';
+import { ExerciseGroup } from './exercise.model';
 import { CreateExerciseGroup, GetAllExerciseGroups, GetAllExercises } from './store/exercise.actions';
 import { ExerciseState } from './store/exercise.state';
 
