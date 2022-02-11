@@ -1,34 +1,62 @@
-<h1>Kraftwerte</h1>
-<form [formGroup]="mainForm">
-  <p>Total: {{ mainForm.controls['total'].value | number }} kg</p>
-  <mat-accordion formArrayName="strengthValues">
-    <mat-expansion-panel *ngFor="let strengthValue of strengthValuesForms?.controls; let i = index" [formGroupName]="i">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ strengthValuesForms.controls[i].value.name }}
-        </mat-panel-title>
-        <mat-panel-description> {{ strengthValuesForms.controls[i].value.oneRepMax }} kg </mat-panel-description>
-      </mat-expansion-panel-header>
-      <progress-text-input
-        [control]="getWeight(i)"
-        [labelText]="'Gewicht'"
-        [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
-        [type]="'number'"
-        [unit]="'kg'"
-      >
-      </progress-text-input>
-      <progress-text-input
-        [control]="getReps(i)"
-        [labelText]="'Wiederholungen'"
-        [errorText]="'Die Wiederholungszahl muss zwischen 1 und 12 Whg. liegen'"
-        [type]="'number'"
-        [unit]="'Wdh'"
-      >
-      </progress-text-input>
-    </mat-expansion-panel>
-  </mat-accordion>
+<div>
+  <mat-card class="progress-card">
+    <mat-card-header>
+      <mat-card-title>Kraftwerte</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="mainForm">
+        <mat-accordion formArrayName="strengthValues">
+          <mat-expansion-panel *ngFor="let strengthValue of strengthValuesForms?.controls">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ strengthValue?.get('name').value }}
+              </mat-panel-title>
+              <mat-panel-description> {{ strengthValue?.get('oneRepMax').value }} kg </mat-panel-description>
+            </mat-expansion-panel-header>
+            <progress-text-input
+              [control]="strengthValue?.get('weight')"
+              [labelText]="'Gewicht'"
+              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              [type]="'number'"
+              [unit]="'kg'"
+            >
+            </progress-text-input>
+            <progress-text-input
+              [control]="strengthValue?.get('reps')"
+              [labelText]="'Wiederholungen'"
+              [errorText]="'Die Wiederholungszahl muss zwischen 1 und 12 Whg. liegen'"
+              [type]="'number'"
+              [unit]="'Wdh'"
+            >
+            </progress-text-input>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Total</mat-panel-title>
+              <mat-panel-description> {{ mainForm.get('total').value | number }} kg </mat-panel-description>
+            </mat-expansion-panel-header>
+            <progress-text-input
+              [control]=""
+              [labelText]="'Sicherheitsfaktor für 1RM'"
+              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              [type]="'number'"
+              [unit]="'%'"
+            >
+            </progress-text-input>
+            <progress-text-input
+              [control]=""
+              [labelText]="'Rundungsfaktor'"
+              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              [type]="'number'"
+            >
+            </progress-text-input>
+          </mat-expansion-panel>
+        </mat-accordion>
 
-  <button mat-raised-button color="primary" type="button" [disabled]="mainForm.invalid" (click)="save()">
-    Speichern
-  </button>
-</form>
+        <button mat-fab class="save-btn" color="primary" type="button" [disabled]="mainForm.invalid" (click)="save()">
+          <mat-icon> save </mat-icon>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

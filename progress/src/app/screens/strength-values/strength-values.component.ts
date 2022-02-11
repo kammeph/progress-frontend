@@ -1,17 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription, tap } from 'rxjs';
-import {
-  GetAllStrengthValues,
-  UpdateStrengthValues,
-} from './store/strength-value.actions';
+import { GetAllStrengthValues, UpdateStrengthValues } from './store/strength-value.actions';
 import { StrengthValueState } from './store/strength-value.state';
 import { StrengthValue } from './strength-value.models';
 import { rpeChart } from 'src/assets/rpeChart';
@@ -19,12 +10,10 @@ import { rpeChart } from 'src/assets/rpeChart';
 @Component({
   selector: 'progress-strength-values',
   templateUrl: './strength-values.component.html',
-  styleUrls: ['./strength-values.component.scss'],
+  styleUrls: ['./strength-values.component.scss']
 })
 export class StrengthValuesComponent implements OnInit, OnDestroy {
-  @Select(StrengthValueState.strengthValues) strengthValues$: Observable<
-    StrengthValue[]
-  >;
+  @Select(StrengthValueState.strengthValues) strengthValues$: Observable<StrengthValue[]>;
 
   mainForm: FormGroup;
   subscription = new Subscription();
@@ -34,18 +23,17 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.mainForm = this.fb.group({
       total: 0,
-      strengthValues: this.fb.array([]),
+      strengthValues: this.fb.array([])
     });
 
     this.subscription.add(
       this.strengthValues$
         .pipe(
-          tap((strengthValues) => {
+          tap(strengthValues => {
             if (strengthValues) {
               this.strengthValuesForms.clear();
-              strengthValues.forEach((strengthValue) => {
-                const strengthValueGroup =
-                  this.createStrengthValueFormGroup(strengthValue);
+              strengthValues.forEach(strengthValue => {
+                const strengthValueGroup = this.createStrengthValueFormGroup(strengthValue);
                 this.subscribeWeigthChages(strengthValueGroup);
                 this.subscribeRepsChages(strengthValueGroup);
                 this.strengthValuesForms.push(strengthValueGroup);
@@ -69,9 +57,7 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.store.dispatch(
-      new UpdateStrengthValues(this.strengthValuesForms.value)
-    );
+    this.store.dispatch(new UpdateStrengthValues(this.strengthValuesForms.value));
   }
 
   createStrengthValueFormGroup(strengthValue: StrengthValue): FormGroup {
@@ -80,23 +66,10 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
       name: strengthValue.name,
       description: strengthValue.description,
       weight: [strengthValue.weight, [Validators.required, Validators.min(1)]],
-      reps: [
-        strengthValue.reps,
-        [Validators.required, Validators.min(1), Validators.max(12)],
-      ],
+      reps: [strengthValue.reps, [Validators.required, Validators.min(1), Validators.max(12)]],
       oneRepMax: strengthValue.oneRepMax,
-      includeInTotal: strengthValue.includeInTotal,
+      includeInTotal: strengthValue.includeInTotal
     });
-  }
-
-  getWeight(index: number) {
-    return this.strengthValuesForms.controls[index].get(
-      'weight'
-    ) as FormControl;
-  }
-
-  getReps(index: number) {
-    return this.strengthValuesForms.controls[index].get('reps') as FormControl;
   }
 
   private subscribeWeigthChages(formGroup: FormGroup) {
@@ -104,11 +77,11 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
       formGroup
         .get('weight')
         .valueChanges.pipe(
-          tap((weight) => {
+          tap(weight => {
             if (weight) {
               const reps = formGroup.get('reps').value;
               formGroup.patchValue({
-                oneRepMax: this.calcOneRepMax(weight, reps),
+                oneRepMax: this.calcOneRepMax(weight, reps)
               });
               this.updateTotal();
             }
@@ -123,11 +96,11 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
       formGroup
         .get('reps')
         .valueChanges.pipe(
-          tap((reps) => {
+          tap(reps => {
             if (reps && reps > 0 && reps <= 12) {
               const weight = formGroup.get('weight').value;
               formGroup.patchValue({
-                oneRepMax: this.calcOneRepMax(weight, reps),
+                oneRepMax: this.calcOneRepMax(weight, reps)
               });
               this.updateTotal();
             }
@@ -149,7 +122,7 @@ export class StrengthValuesComponent implements OnInit, OnDestroy {
           sum += strengthValue.oneRepMax;
         }
         return sum;
-      }, 0.0),
+      }, 0.0)
     });
   }
 }
