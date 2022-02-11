@@ -1,0 +1,47 @@
+@import 'progress-ui-theme.scss';
+
+.registration-page {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.registration-card {
+  width: min(400px, 80%);
+}
+
+.registration-card > mat-card-header {
+  @include mat-typography-level-to-styles($typography, title);
+  display: flex;
+  justify-content: center;
+}
+
+.registration-card > mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.link-section {
+  margin: 2em;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.link-section > span {
+  @include mat-typography-level-to-styles($typography, body-1);
+}
+
+.link-section > a {
+  all: unset;
+  @include mat-typography-level-to-styles($typography, button);
+  cursor: pointer;
+}

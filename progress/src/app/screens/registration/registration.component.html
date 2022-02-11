@@ -1,24 +1,30 @@
-<form [formGroup]="registerForm" (ngSubmit)="submit()">
-  <progress-text-input [control]="username" [labelText]="'Benutzername'" [errorText]="'Benutzernamen eingeben'">
-  </progress-text-input>
-
-  <progress-password-input [control]="password" [labelText]="'Passwort'" [errorText]="'Passwort eingeben'">
-  </progress-password-input>
-
-  <progress-password-input
-    [control]="passwordRepeat"
-    [labelText]="'Passwort wiederholen'"
-    [errorText]="'Passwort eingeben'"
-  >
-  </progress-password-input>
-
-  <p *ngIf="registrationSuccess$ | async">Anmeldung war erfolgreich</p>
-
-  <mat-error *ngIf="password.valid && passwordRepeat.valid && password.value != passwordRepeat.value">
-    Passwörter stimmen nicht überein!
-  </mat-error>
-
-  <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Registrieren</button>
-</form>
-<p>Du hast bereits einen Account?</p>
-<a routerLink="/login">Log In</a>
+<div class="registration-page">
+  <mat-card class="registration-card">
+    <mat-card-header>
+      <mat-card-title>Registrierung</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="registration-form" [formGroup]="registerForm" (ngSubmit)="submit()">
+        <progress-text-input [control]="username" [labelText]="'Benutzername'" [errorText]="'Benutzernamen eingeben'">
+        </progress-text-input>
+        <progress-password-input [control]="password" [labelText]="'Passwort'" [errorText]="'Passwort eingeben'">
+        </progress-password-input>
+        <progress-password-input
+          [control]="passwordRepeat"
+          [labelText]="'Passwort wiederholen'"
+          [errorText]="'Passwort eingeben'"
+        >
+        </progress-password-input>
+        <p *ngIf="registrationSuccess$ | async">Anmeldung war erfolgreich</p>
+        <mat-error *ngIf="password.valid && passwordRepeat.valid && password.value != passwordRepeat.value">
+          Passwörter stimmen nicht überein!
+        </mat-error>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Registrieren</button>
+      </form>
+      <div class="link-section">
+        <span>Du hast bereits einen Account?</span>
+        <a routerLink="/login">Log In</a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

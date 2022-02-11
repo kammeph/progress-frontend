@@ -17,7 +17,7 @@ export class AppStateModel {
 
 @State<AppStateModel>({
   name: 'app',
-  defaults: new AppStateModel(),
+  defaults: new AppStateModel()
 })
 @Injectable()
 export class AppState implements NgxsOnInit {
@@ -41,27 +41,21 @@ export class AppState implements NgxsOnInit {
     return state.registrationFailed;
   }
 
-  constructor(
-    private authService: AuthService,
-    private tokenService: TokenService
-  ) {}
+  constructor(private authService: AuthService, private tokenService: TokenService) {}
 
   ngxsOnInit(ctx?: StateContext<AppStateModel>) {}
 
   @Action(Login)
-  login(
-    { patchState, dispatch }: StateContext<AppStateModel>,
-    { username, password }: Login
-  ) {
+  login({ patchState, dispatch }: StateContext<AppStateModel>, { username, password }: Login) {
     return this.authService.authenticate(username, password).pipe(
-      tap((authData) => {
+      tap(authData => {
         this.tokenService.setToken(authData.access_token);
         this.tokenService.setRefreshToken(authData.refresh_token);
         patchState({
           isLoggedIn: true,
           loginFailed: false,
           registrationSuccess: false,
-          registrationFailed: false,
+          registrationFailed: false
         });
       }),
       mergeMap(() => dispatch(new Navigate(['']))),
@@ -74,7 +68,7 @@ export class AppState implements NgxsOnInit {
     const refreshToken = this.tokenService.getRefreshToken();
     if (refreshToken) {
       return this.authService.refreshToken(refreshToken).pipe(
-        tap((token) => this.tokenService.setToken(token.access_token)),
+        tap(token => this.tokenService.setToken(token.access_token)),
         catchError((err: HttpErrorResponse) => {
           if (err.status == 401) {
             return dispatch(new Logout());
@@ -96,14 +90,10 @@ export class AppState implements NgxsOnInit {
   }
 
   @Action(Register)
-  register(
-    { patchState, dispatch }: StateContext<AppStateModel>,
-    { username, password }: Register
-  ) {
+  register({ patchState, dispatch }: StateContext<AppStateModel>, { username, password }: Register) {
     return this.authService.register(username, password).pipe(
       tap(() => patchState({ registrationSuccess: true })),
-      delay(2000),
-      mergeMap(() => dispatch(new Navigate(['/login']))),
+      mergeMap(() => dispatch(new Login(username, password))),
       catchError(() => of(patchState({ registrationFailed: true })))
     );
   }
