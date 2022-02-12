@@ -1,0 +1,24 @@
+{
+  "xliffmergeOptions": {
+    "srcDir": "src/locale",
+    "genDir": "src/locale",
+    "i18nFormat": "xlf",
+    "encoding": "UTF-8",
+    "defaultLanguage": "en-US",
+    "languages": ["de"],
+    "removeUnusedIds": true,
+    "supportNgxTranslate": false,
+    "ngxTranslateExtractionPattern": "@@|ngx-translate",
+    "useSourceAsTarget": true,
+    "targetPraefix": "",
+    "targetSuffix": "",
+    "beautifyOutput": true,
+    "preserveOrder": true,
+    "allowIdChange": false,
+    "autotranslate": false,
+    "apikey": "",
+    "apikeyfile": "",
+    "verbose": false,
+    "quiet": false
+  }
+}
