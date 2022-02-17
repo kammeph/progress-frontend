@@ -1,29 +1,55 @@
 <div class="registration-page">
   <mat-card class="registration-card">
     <mat-card-header>
-      <mat-card-title>Registrierung</mat-card-title>
+      <mat-card-title i18n="@@registration">Registration</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form class="registration-form" [formGroup]="registerForm" (ngSubmit)="submit()">
-        <progress-text-input [control]="username" [labelText]="'Benutzername'" [errorText]="'Benutzernamen eingeben'">
+        <progress-text-input
+          [control]="username"
+          i18n-labelText="@@userName"
+          labelText="User name"
+          i18n-errorText="@@enterUserName"
+          errorText="Enter user name"
+        >
         </progress-text-input>
-        <progress-password-input [control]="password" [labelText]="'Passwort'" [errorText]="'Passwort eingeben'">
+        <progress-password-input
+          [control]="password"
+          i18n-labelText="@@password"
+          labelText="Password"
+          i18n-errorText="@@enterPassword"
+          errorText="Enter password"
+        >
         </progress-password-input>
         <progress-password-input
           [control]="passwordRepeat"
-          [labelText]="'Passwort wiederholen'"
-          [errorText]="'Passwort eingeben'"
+          i18n-labelText="@@passwordRepeat"
+          labelText="Repeat password"
+          i18n-errorText="@@enterPassword"
+          errorText="Enter password"
         >
         </progress-password-input>
-        <p *ngIf="registrationSuccess$ | async">Anmeldung war erfolgreich</p>
-        <mat-error *ngIf="password.valid && passwordRepeat.valid && password.value != passwordRepeat.value">
-          Passwörter stimmen nicht überein!
+        <mat-error
+          i18n="@@passwordsNotEqual"
+          *ngIf="password.valid && passwordRepeat.valid && password.value != passwordRepeat.value"
+        >
+          Passwords not equal!
         </mat-error>
-        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Registrieren</button>
+        <button i18n="@@register" mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+          Register
+        </button>
       </form>
       <div class="link-section">
-        <span>Du hast bereits einen Account?</span>
-        <a routerLink="/login">Log In</a>
+        <span i18n="@@acountExists">Account exists?</span>
+        <a i18n="@@login" routerLink="/login">Login</a>
+      </div>
+      <div class="locale-btns">
+        <button mat-icon-button (click)="changeLocale('de')">
+          <img class="flag-img" src="assets/icons/germany.png" alt="germany flag" />
+        </button>
+        <button mat-icon-button (click)="changeLocale('en-US')">
+          <img class="flag-img" src="assets/icons/united-states.png" alt="united-states flag" />
+        </button>
       </div>
     </mat-card-content>
   </mat-card>

@@ -15,3 +15,8 @@ export class Register {
   static readonly type = '[App] Register';
   constructor(public username: string, public password: string) {}
 }
+
+export class ChangeLocale {
+  static readonly type = '[App] Change Locale';
+  constructor(public locale: string) {}
+}

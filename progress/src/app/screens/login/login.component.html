@@ -5,16 +5,40 @@
     </mat-card-header>
     <mat-card-content>
       <form class="login-form" [formGroup]="logInForm" (ngSubmit)="submit()">
-        <progress-text-input [control]="username" [labelText]="'Benutzername'" [errorText]="'Benutzernamen eingeben'">
+        <progress-text-input
+          [control]="username"
+          i18n-labelText="@@userName"
+          labelText="User name"
+          i18n-errorText="@@enterUserName"
+          errorText="Enter user name"
+        >
         </progress-text-input>
-        <progress-password-input [control]="password" [labelText]="'Passwort'" [errorText]="'Passwort eingeben'">
+        <progress-password-input
+          [control]="password"
+          i18n-labelText="@@password"
+          labelText="Password"
+          i18n-errorText="@@enterPassword"
+          errorText="Enter password"
+        >
         </progress-password-input>
-        <mat-error *ngIf="logInFailed$ | async">Benutzername oder Passwort nicht korrekt</mat-error>
-        <button mat-raised-button color="primary" type="submit" [disabled]="logInForm.invalid">LogIn</button>
+        <mat-error i18n="@@credentialsIncorrect" *ngIf="logInFailed$ | async"
+          >User name or password incorrect</mat-error
+        >
+        <button mat-raised-button i18n="@@login" color="primary" type="submit" [disabled]="logInForm.invalid">
+          Login
+        </button>
       </form>
       <div class="link-section">
         <span i18n="@@createAccount">Create account?</span>
-        <a routerLink="/registration">Registrieren</a>
+        <a i18n="@@register" routerLink="/registration">Register</a>
+      </div>
+      <div class="locale-btns">
+        <button mat-icon-button (click)="changeLocale('de')">
+          <img class="flag-img" src="assets/icons/germany.png" alt="germany flag" />
+        </button>
+        <button mat-icon-button (click)="changeLocale('en-US')">
+          <img class="flag-img" src="assets/icons/united-states.png" alt="united-states flag" />
+        </button>
       </div>
     </mat-card-content>
   </mat-card>

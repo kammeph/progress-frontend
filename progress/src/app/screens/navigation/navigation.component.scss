@@ -140,20 +140,19 @@ nav a {
     opacity: 1;
   }
 
-  nav a::before {
+  nav a::after {
     content: '';
     display: block;
-    height: 5px;
+    height: 3px;
     background-color: map-get($accent, 700);
-    position: absolute;
     bottom: -0.25em;
     left: 0;
     right: 0;
     transform: scale(0, 1);
-    transition: transform ease-in-out 250ms;
+    transition: transform ease-in-out 300ms;
   }
 
-  nav a:hover::before {
+  nav a:hover::after {
     transform: scale(1, 1);
   }
 }

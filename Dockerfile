@@ -11,13 +11,14 @@ RUN npm install --silent
 COPY ./progress .
 
 # run the build process
-RUN npm run build --prod
+RUN npm run build:prod
 
 ## PRODUCTION STAGE: use nginx as webserver to host the application
 FROM nginx:1.21.5-alpine
 
 # copy server configuration
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # copy compiles files from build stage to nginx html folder
 COPY --from=build app/dist/progress-frontend /usr/share/nginx/html

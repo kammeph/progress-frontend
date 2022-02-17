@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Navigate } from '@ngxs/router-plugin';
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, delay, mergeMap, of, tap, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../lib/services/auth.service/auth.service';
 import { TokenService } from '../lib/services/token.service/token.service';
-import { Login, Logout, RefreshToken, Register } from './app.action';
+import { ChangeLocale, Login, Logout, RefreshToken, Register } from './app.action';
 
 export class AppStateModel {
   isLoggedIn: boolean;
@@ -13,6 +14,7 @@ export class AppStateModel {
   registrationSuccess: boolean;
   registrationFailed: boolean;
   isOnline: boolean;
+  locale: string = 'de';
 }
 
 @State<AppStateModel>({
@@ -41,7 +43,16 @@ export class AppState implements NgxsOnInit {
     return state.registrationFailed;
   }
 
-  constructor(private authService: AuthService, private tokenService: TokenService) {}
+  @Selector()
+  static locale(state: AppStateModel) {
+    return state.locale;
+  }
+
+  constructor(
+    private authService: AuthService,
+    private tokenService: TokenService,
+    @Inject(LOCALE_ID) private localeId: string
+  ) {}
 
   ngxsOnInit(ctx?: StateContext<AppStateModel>) {}
 
@@ -82,10 +93,13 @@ export class AppState implements NgxsOnInit {
   }
 
   @Action(Logout)
-  logout({ setState, dispatch }: StateContext<AppStateModel>) {
+  logout({ patchState, dispatch }: StateContext<AppStateModel>) {
     this.tokenService.clearToken();
     this.tokenService.clearRefreshToken();
-    setState(new AppStateModel());
+    patchState({
+      isLoggedIn: false,
+      loginFailed: false
+    });
     dispatch(new Navigate(['/login']));
   }
 
@@ -96,5 +110,17 @@ export class AppState implements NgxsOnInit {
       mergeMap(() => dispatch(new Login(username, password))),
       catchError(() => of(patchState({ registrationFailed: true })))
     );
+  }
+
+  @Action(ChangeLocale)
+  changeLocale({ getState, patchState }: StateContext<AppStateModel>, { locale }: ChangeLocale) {
+    const state = getState();
+    if (state.locale !== locale) {
+      if (environment.production) {
+        const newUrl = window.location.href.replace(`${this.localeId}/`, `${locale}/`);
+        window.location.replace(newUrl);
+      }
+      patchState({ locale: locale });
+    }
   }
 }

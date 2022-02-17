@@ -45,3 +45,12 @@
   @include mat-typography-level-to-styles($typography, button);
   cursor: pointer;
 }
+
+.locale-btns {
+  display: flex;
+  gap: 30%;
+}
+
+.flag-img {
+  width: 35px;
+}

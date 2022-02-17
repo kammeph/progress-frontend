@@ -1,7 +1,7 @@
 <div>
   <mat-card class="progress-card">
     <mat-card-header>
-      <mat-card-title>Kraftwerte</mat-card-title>
+      <mat-card-title i18n="@@strengthValues">Strength values</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="mainForm">
@@ -15,38 +15,43 @@
             </mat-expansion-panel-header>
             <progress-text-input
               [control]="strengthValue?.get('weight')"
-              [labelText]="'Gewicht'"
-              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              i18n-labelText="@@weight"
+              labelText="Weight"
+              i18n-errorText="@@weightInvalid"
+              errorText="Weight must be more then 1kg"
               [type]="'number'"
               [unit]="'kg'"
             >
             </progress-text-input>
             <progress-text-input
               [control]="strengthValue?.get('reps')"
-              [labelText]="'Wiederholungen'"
-              [errorText]="'Die Wiederholungszahl muss zwischen 1 und 12 Whg. liegen'"
+              i18n-labelText="@@repetitions"
+              labelText="Repetitions"
+              i18n-errorText="@@repsInvalid"
+              errorText="Repetition count must be more the 1"
               [type]="'number'"
-              [unit]="'Wdh'"
+              i18n-unit="@@repsUnit"
+              unit="reps"
             >
             </progress-text-input>
           </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <mat-panel-title>Total</mat-panel-title>
+              <mat-panel-title i18n="@@total">Total</mat-panel-title>
               <mat-panel-description> {{ mainForm.get('total').value | number }} kg </mat-panel-description>
             </mat-expansion-panel-header>
             <progress-text-input
               [control]=""
-              [labelText]="'Sicherheitsfaktor für 1RM'"
-              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              i18n-labelText="@@safetyFactor1RM"
+              labelText="Safety factor 1RM"
               [type]="'number'"
               [unit]="'%'"
             >
             </progress-text-input>
             <progress-text-input
               [control]=""
-              [labelText]="'Rundungsfaktor'"
-              [errorText]="'Das Gewicht muss mindestens 1kg betragen'"
+              i18n-labelText="@@roundingFactor"
+              labelText="Rounding factor"
               [type]="'number'"
             >
             </progress-text-input>

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -66,6 +68,7 @@ import { ExerciseEditFormComponent } from './screens/exercises/exercise-edit-for
     MatExpansionModule,
     MatBottomSheetModule,
     MatCardModule,
+    MatMenuModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -99,7 +102,12 @@ import { ExerciseEditFormComponent } from './screens/exercises/exercise-edit-for
       useClass: ErrorInterceptor,
       multi: true
     },
-    { provide: 'API_URL', useValue: environment.apiEndpoint }
+    { provide: 'API_URL', useValue: environment.apiEndpoint },
+    {
+      provide: APP_BASE_HREF,
+      useFactory: (s: PlatformLocation) => s.getBaseHrefFromDOM(),
+      deps: [PlatformLocation]
+    }
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: FormatInterceptor,
